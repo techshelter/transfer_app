@@ -14,8 +14,14 @@ MyApp.configure do |container|
   container.register('clients.repository') do
     Clients::Repository.new(container['persistence'])
   end
-  container.register('clients.contracts.new_user') do
-    Clients::Contracts::NewUser.new(
+  container.register('clients.contracts.user_contract') do
+    Clients::Contracts::User.new(
+      repo: container['clients.repository']
+    )
+  end
+
+  container.register('clients.contracts.message_contract') do
+    Clients::Contracts::Message.new(
       repo: container['clients.repository']
     )
   end

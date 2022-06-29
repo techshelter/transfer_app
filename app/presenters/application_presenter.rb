@@ -1,6 +1,8 @@
 class ApplicationPresenter
-  def initialize(object)
+  def initialize(object, presenter: nil, key: nil)
     @object = object
+    @presenter = presenter
+    @key = key || 'collection'
   end
 
   def as_json

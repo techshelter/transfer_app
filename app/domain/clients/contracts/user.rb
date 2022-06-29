@@ -1,6 +1,6 @@
 module Clients
   module Contracts
-    class NewUser < Dry::Validation::Contract
+    class User < Dry::Validation::Contract
       option :repo
       params do
         required(:name).filled(:string)
@@ -11,7 +11,7 @@ module Clients
         if values[:number].length != 10
           key.failure('number should be 10 characters')
         end
-        if repo.exist?(values[:number])
+        if repo.with_number_exist?(values[:number])
           key.failure('user with this number already exists')
         end
       end

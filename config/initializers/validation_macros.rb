@@ -6,3 +6,9 @@ Dry::Validation.register_macro(:numeric) do
     key.failure('should contain only numbers')
   end
 end
+
+Dry::Validation.register_macro(:uuid) do
+  if UUID.validate(value).nil?
+    key.failure('not a valid ID')
+  end
+end

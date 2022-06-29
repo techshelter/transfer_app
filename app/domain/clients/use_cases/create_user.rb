@@ -2,7 +2,7 @@ module Clients
   module UseCases
     class CreateUser
       include Dry::Monads[:result]
-      include MyApp.instance.import['clients.repository', 'clients.contracts.new_user']
+      include MyApp.instance.import['clients.repository', 'clients.contracts.user_contract']
       include MyApp.instance.import['event_bus']
 
       def call(name:, number:)
@@ -14,7 +14,7 @@ module Clients
       private
 
       def validate_input(name, number)
-        result = new_user.call(name: name, number: number)
+        result = user_contract.call(name: name, number: number)
         if result.success?
           Success({name: name, number: number})
         else

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include Dry::Monads[:result]
 
   def index
-    render json: UsersPresenter.new(repo.all.to_a)
+    render json: CollectionPresenter.new(repo.all.to_a, presenter: UserPresenter, key: :users)
   end
 
   def create
