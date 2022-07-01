@@ -8,7 +8,7 @@ class InboxesController < ApplicationController
   end
 
   def create
-    res =  case create_message
+    res = case create_message
       in Success(message: message)
         render json: MessagePresenter.new(message)
       in Failure(errors)

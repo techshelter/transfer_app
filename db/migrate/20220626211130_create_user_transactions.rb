@@ -6,7 +6,7 @@ ROM::SQL.migration do
       column :id, :uuid, default: Sequel.function(:uuid_generate_v4), primary_key: true
       foreign_key :user_id, :users, type: :uuid
       Integer :amount, null: false
-      Integer :transation_type, null: false
+      Integer :transaction_type, null: false
 
       DateTime :created_at, null: false
       DateTime :updated_at, null: false

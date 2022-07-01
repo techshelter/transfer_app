@@ -25,4 +25,10 @@ MyApp.configure do |container|
       repo: container['clients.repository']
     )
   end
+
+  container.register('clients.contracts.transaction_contract') do
+    Clients::Contracts::Transaction.new(
+      repo: container['clients.repository']
+    )
+  end
 end

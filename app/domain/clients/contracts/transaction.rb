@@ -1,21 +1,16 @@
 module Clients
   module Contracts
-    class Message < Dry::Validation::Contract
+    class Transaction < Dry::Validation::Contract
       option :repo
 
       params do
         required(:user_id).filled(:string)
-        required(:message).filled(:string)
-        required(:sender).filled(:string)
+        required(:amount).filled(:integer)
       end
 
-      rule(:sender) do
-        if UUID.validate(values[:sender])
-          if repo.by_id(values[:sender]).nil?
-            key.failure('does not exist')
-          end
-        else
-          key.failure('does not exist')
+      rule(:amount) do
+        if values[:amount] <= 0
+          key.failure('should be more than zero')
         end
       end
 

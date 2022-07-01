@@ -6,5 +6,9 @@ Rails.application.routes.draw do
 
   resources :users, only: [:create, :index] do
     resources :inboxes, only: [:index, :create, :show]
+    resources :transactions, only: [:create, :index]
+    member do
+      get 'balance'
+    end
   end
 end

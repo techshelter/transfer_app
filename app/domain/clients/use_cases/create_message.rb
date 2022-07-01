@@ -28,7 +28,7 @@ module Clients
   
         message_created = repository.create(changeset)
         if message_created
-          event_bus.publish('users.message.created', message_created)
+          event_bus.publish('users.messages.created', message_created)
           Success(message: message_created)
         else
           Failure(error: :message_not_created)

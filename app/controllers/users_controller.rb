@@ -14,6 +14,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def balance
+    render json: {id: params[:id], balance: repo.user_balance(params[:id])}
+  end
+
+  def credit
+
+  end
+
   private
   def create_user
     Clients::UseCases::CreateUser
