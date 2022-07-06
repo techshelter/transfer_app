@@ -1,6 +1,7 @@
 module Clients
   module Contracts
     class User < Dry::Validation::Contract
+      include Deps[repo: 'clients.repository']
       option :repo
       params do
         required(:name).filled(:string)

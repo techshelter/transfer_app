@@ -32,7 +32,7 @@ class InboxesController < ApplicationController
   end
 
   def repo
-    MyApp.instance['clients.repository']
+    MyApp.instance['clients_repository']
   end
 
   def find_message

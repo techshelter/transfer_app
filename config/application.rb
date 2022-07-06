@@ -26,7 +26,8 @@ require 'rom-sql'
 require 'rom-repository'
 require 'rom-changeset'
 require 'dry-events'
-require 'dry-monads'
+require 'dry/monads'
+require 'dry/monads/do'
 require 'dry-auto_inject'
 
 module TransferApp
@@ -47,6 +48,6 @@ module TransferApp
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    require 'my_app'
+    # require 'my_app'
   end
 end

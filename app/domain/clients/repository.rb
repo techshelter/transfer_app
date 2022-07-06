@@ -1,5 +1,7 @@
 module Clients
   class Repository < ROM::Repository[:users]
+    include Deps[container: 'persistence']
+
     commands :create,
       use: :timestamps,
       plugins_options: {
@@ -20,6 +22,10 @@ module Clients
 
     def by_id(id)
       users.by_pk(id).one
+    end
+
+    def user_by_phone_number(number)
+      users.where(number: number).one!
     end
     
     def user_messages(id)

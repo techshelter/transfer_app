@@ -36,9 +36,11 @@ gem 'dry-events'
 gem 'dry-monads'
 gem 'dry-validation'
 gem 'dry-container'
+gem 'dry-system'
 gem 'dry-auto_inject'
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 gem 'uuid', '~> 2.3', '>= 2.3.8'
+gem 'wisper', '2.0.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

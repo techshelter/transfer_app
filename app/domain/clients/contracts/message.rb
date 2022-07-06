@@ -1,6 +1,8 @@
 module Clients
   module Contracts
     class Message < Dry::Validation::Contract
+      include Deps[repo: 'clients.repository']
+
       option :repo
 
       params do
@@ -10,11 +12,7 @@ module Clients
       end
 
       rule(:sender) do
-        if UUID.validate(values[:sender])
-          if repo.by_id(values[:sender]).nil?
-            key.failure('does not exist')
-          end
-        else
+        if !UUID.validate(values[:sender])
           key.failure('does not exist')
         end
       end

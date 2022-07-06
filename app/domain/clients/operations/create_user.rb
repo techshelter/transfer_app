@@ -1,9 +1,12 @@
 module Clients
-  module UseCases
+  module Operations
     class CreateUser
       include Dry::Monads[:result]
-      include MyApp.instance.import['clients.repository', 'clients.contracts.user_contract']
-      include MyApp.instance.import['event_bus']
+      include Deps[
+        'clients.repository',
+        'event_bus',
+        contract: 'clients.contracts.user'
+      ]
 
       def call(name:, number:)
         validate_input(name, number).bind do |attrs|
@@ -14,7 +17,7 @@ module Clients
       private
 
       def validate_input(name, number)
-        result = user_contract.call(name: name, number: number)
+        result = contract.call(name: name, number: number)
         if result.success?
           Success({name: name, number: number})
         else
@@ -23,11 +26,13 @@ module Clients
       end
 
       def create_user(name: ,number:)
-        user_changeset = repository.users.changeset(:create, name: name, number: number)
-                   .map(:add_timestamps)
-        user = repository.create(user_changeset)
+        user_changeset = repository
+                          .users
+                          .changeset(:create, name: name, number: number)
+                          .map(:add_timestamps)
+        user = repository.create(name: name, number: number)
         if user
-          event_bus.publish('users.created', user)
+          event_bus.publish('users.created', payload: user)
           Success(user: user)
         else
           Failure(error: :user_not_created)

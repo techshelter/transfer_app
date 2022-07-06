@@ -27,10 +27,9 @@ module Clients
                                                                        user_id: user_id,
                                                                        amount: amount,
                                                                        transaction_type: Constant::TRANSACTION_TYPES['credit'])
-                   .map(:add_timestamps)
         transaction = repository.create(transaction_changeset)
         if transaction
-          event_bus.publish('users.transactions.created', transaction)
+          event_bus.publish('users.transactions.created', payload: transaction)
           Success(transaction: transaction)
         else
           Failure(error: :transaction_not_created)

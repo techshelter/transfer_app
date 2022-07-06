@@ -11,14 +11,12 @@ Rails.application.routes.draw do
       get 'balance'
     end
   end
-
+  
   resources :agencies, only: [:index] do
     resources :transfers, only: [:create]
     member do
       post 'claim'
       get 'transactions'
-      
-
     end
   end
 end

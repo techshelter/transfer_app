@@ -1,9 +1,9 @@
-module Clients
+module Agencies
   module Relations
     class Transactions < ROM::Relation[:sql]
-      schema(:user_transactions, infer: true) do
+      schema(:agency_transactions, infer: true) do
         associations do
-          belongs_to :user
+          belongs_to :agency
         end
       end
     end

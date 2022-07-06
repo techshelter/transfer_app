@@ -1,9 +1,9 @@
 module Clients
-  module UseCases
+  module Operations
     class CreateMessage
       include Dry::Monads[:result]
-      include MyApp.instance.import['clients.repository', 'clients.contracts.message_contract']
-      include MyApp.instance.import['event_bus']
+      include Deps['clients.repository', message_contract: 'clients.contracts.message']
+      include Deps['event_bus']
 
       def call(message: , user_id:, sender:)
         validate_input(message, user_id, sender).bind do |attrs|
@@ -23,12 +23,14 @@ module Clients
       end
   
       def create_message_for_user(message:, user_id:, sender:)
-        changeset = repository.user_inboxes.changeset(:create, message: message, user_id: user_id, sender: sender)
-                              .map(:add_timestamps)
+        changeset = repository
+                      .user_inboxes
+                      .changeset(:create, message: message, user_id: user_id, sender: sender)
+                      .map(:add_timestamps)
   
         message_created = repository.create(changeset)
         if message_created
-          event_bus.publish('users.messages.created', message_created)
+          event_bus.publish('users.messages.created', payload: message_created)
           Success(message: message_created)
         else
           Failure(error: :message_not_created)

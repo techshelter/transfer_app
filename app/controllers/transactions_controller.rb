@@ -27,7 +27,7 @@ class TransactionsController < ApplicationController
   end
 
   def repo
-    MyApp.instance['clients.repository']
+    MyApp.instance['clients_repository']
   end
 
 end
